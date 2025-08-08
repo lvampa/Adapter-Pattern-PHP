@@ -1,0 +1,17 @@
+{
+    "name": "training/adapter",
+    "autoload": {
+        "psr-4": {
+            "Training\\Adapter\\SimpleExample\\": "simple-example/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Connor Abdelnoor",
+            "email": "connor.abd@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "behat/behat": "^3.23"
+    }
+}

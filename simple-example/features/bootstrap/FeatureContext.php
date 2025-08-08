@@ -8,6 +8,11 @@ use Behat\Step\Given;
 use Behat\Step\When;
 use Behat\Step\Then;
 
+use Training\Adapter\SimpleExample\LibraryPatron;
+use Training\Adapter\SimpleExample\Book;
+use Training\Adapter\SimpleExample\AudioBookAdapter;
+use Training\Adapter\SimpleExample\AudioBook;
+
 /**
  * Defines application features from the specific context.
  */
@@ -24,39 +29,46 @@ class FeatureContext implements Context
     {
     }
 
-    #[Given('a library reader')]
-    public function aLibraryReader(): void
+    #[Given('a library patron and a book')]
+    public function aLibraryPatron(): void
     {
-        throw new PendingException();
+        $this->patron = new LibraryPatron();
+        $this->book = new Book();
     }
 
-    #[When('they loan out a book')]
-    public function theyLoanOutABook(): void
+    #[When('they read the book')]
+    public function theyReadABooook(): void
     {
-        throw new PendingException();
+        $this->patron->readBook($this->book);
     }
 
-    #[Then('they can read the book')]
-    public function theyCanReadTheBook(): void
+    #[Then('the book is marked as read')]
+    public function thenTheBookIsRead(): void
     {
-        throw new PendingException();
+      if (!$this->book->hasBeenRead) {
+          throw new Exception('Book is not marked as read.');
+      }
     }
 
-    #[Given('an audiobook listener')]
-    public function anAudiobookListener(): void
+    #[Given('a library patron and an audio book')]
+    public function anotherLibraryPatron(): void
     {
-        throw new PendingException();
+        $audioBook = new AudioBook();
+        $this->patron = new LibraryPatron();
+        $this->audioBookAdapter = new AudioBookAdapter($audioBook);
     }
 
-    #[When('they loan an audiobook')]
-    public function theyLoanAnAudiobook(): void
+    #[When('they listen to an audio book')]
+    public function theyListenToAnAudioBook(): void
     {
-        throw new PendingException();
+        $this->patron->readBook($this->audioBookAdapter);
     }
 
-    #[Then('they can listen to the book')]
-    public function theyCanListenToTheBook(): void
+    #[Then('the audio book is marked as listened to')]
+    public function theAudioBookIsMarkedAsListenedTo(): void
     {
-        throw new PendingException();
+      if (!$this->audioBookAdapter->hasBeenRead) {
+          throw new Exception('Audiobook has not been listened to.');
+      }
     }
 }
